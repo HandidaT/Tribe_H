@@ -1,12 +1,12 @@
-import openpyxl
+#import openpyxl
 import pandas as pd
 
 
 def xlsx_extractto_csv(filename,startrow,endrow,startcol,endcol,output_csv):
-   file="ABMD - EndNov2018_Send.xlsx"
+   file=filename
    data=pd.ExcelFile(file)
    print(data.sheet_names)
-   df=data.parse("Informatics")
+   df=data.parse(data.sheet_names[0])#("Informatics")
    print(df.info,"\n",df.head(10))
    df1=df.iloc[startrow:endrow,startcol:endcol]
    print("\n\n",df1.head(18))

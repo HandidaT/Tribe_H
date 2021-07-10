@@ -4,15 +4,15 @@ Tribe H datascience project
 This is a dynamic ETL application. In progress.
 
 # API Documentation
-### Extract
-#### Methods
-###### Parse:
+## Extract
+### Methods
+#### Parse:
 The parse method takes filename as argument. parse("filename")
 
 
-### Transform
-### Load
-### Dynamize
+## Transform
+## Load
+## Dynamize
 
 # GUI Documentation
 

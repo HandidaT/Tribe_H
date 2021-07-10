@@ -3,10 +3,13 @@ Tribe H datascience project
 # About
 This is a dynamic ETL application. In progress.
 
-# Documentation
+# API Documentation
 ### Extract
 
 
 ### Transform
 ### Load
 ### Dynamize
+
+# GUI Documentation
+

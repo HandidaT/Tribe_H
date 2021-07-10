@@ -9,3 +9,4 @@ This is a dynamic ETL application. In progress.
 
 ### Transform
 ### Load
+### Dynamize

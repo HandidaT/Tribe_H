@@ -33,10 +33,8 @@ def regression(filename,sheet):
    indx=index[data1[Str] == "Max "].tolist()[0]#data1[Str].strip()
    data=data1.iloc[indx-1:indx+2,16:18].values
    actual=data[0][1]
-   #Max
-   Max=data[1][1]
-   #min
-   Min=data[2][1]
+   Max=data[1][1]#Max
+   Min=data[2][1]#min
    d=data1.iloc[indx-1:indx,2:4].values[0][0]
    year="20"+d[2:]
    quarter=d[:2]
@@ -51,10 +49,8 @@ def parse(filename,ticker,dfrowinx=0):
    estimated_smin=None;forecast_actual=None
    forecast_max=None;forecast_min=None
    f1=pd.read_excel(filename,sheet_name=None)
-   print("---------------------------------------------------------------------------------------")
    flag1=0;er_count=0;emp_returnlen=3;reg_returnlen=5
    emp_arr=[];reg_arr=[];emp_type=[];reg_type=[]
-   #the number of regression sheet should equal empirical sheets. do it with a flag
    for key in f1.keys():
       print(key)
       pattern1=re.compile(r'Empirical Model')
@@ -74,7 +70,6 @@ def parse(filename,ticker,dfrowinx=0):
          emp_arr.append(estimated_smin)
       for j in pattern2.finditer(key):
          if '-' in key:
-            print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
             temp1=key.split('-')
             temp2=temp1[1]
             temp3=temp2.strip()
@@ -87,23 +82,19 @@ def parse(filename,ticker,dfrowinx=0):
          reg_arr.append(forecast_actual)
          reg_arr.append(forecast_max)
          reg_arr.append(forecast_min)
-      #er_count*2
    for i in range(er_count):
       if not emp_type:
-         print("########################################## type None ################################################################")
          Type=None
       else:
          print(emp_type)
          if emp_type[i]!=reg_type[i]:
-            print("########################################## types not equal ################################################################")
          else:
-            print("########################################## types equal ################################################################")
             Type=emp_type[i]
       csvdf.loc[dfrowinx]=[currentdate,ticker,Type,reg_arr[i],reg_arr[i+1],emp_arr[i],emp_arr[i+1],emp_arr[i+2],reg_arr[i+2],reg_arr[i+3],reg_arr[i+4]]
       csvdf.to_sql(name='outputdata',con=engine,index=False,if_exists='append')
       csvdf.to_csv('abmd.csv')
       dfrowinx+=1
-   print_df()
+   #print_df()
 
 
 
@@ -111,7 +102,6 @@ def parse(filename,ticker,dfrowinx=0):
 with zipfile.ZipFile("ETL Datasheet1.zip","r") as my_zip:
    csvdf = pd.DataFrame(columns=['Date', 'Ticker', 'Type','Quarter','Year','Estimated_Total_Sold','Estimated_Sold_Max'\
                           ,'Estimated_Sold_Min','Forecast_wo_SA_Actual','Forecast_wo_Max','Forecast_wo_Min'])
-   #t()
    dfrowinx=0
    for i in my_zip.namelist():
       my_zip.extract(i)
@@ -123,7 +113,6 @@ with zipfile.ZipFile("ETL Datasheet1.zip","r") as my_zip:
          ticker=i[j.start()+1:j.end()]
          print(ticker)
       currentdate=date.today().strftime("%Y/%m/%d")
-      #ticker= already initialized
       parse(i,ticker,dfrowinx)
 
 

@@ -24,7 +24,7 @@ def empirical(filename,sheet):
    Min=data[2][1]
    return actual,Max,Min
    
-engine = sqlalchemy.create_engine('mysql+pymysql://root:$@K**ef251a@localhost:3306/AnalystData')
+engine = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306/AnalystData')
    
 def regression(filename,sheet):
    data1=pd.read_excel(filename,sheet_name=sheet)
@@ -61,7 +61,6 @@ def parse(filename,ticker,dfrowinx=0):
       pattern2=re.compile(r'Regression Model')
       for j in pattern1.finditer(key):
          if '-' in key:
-            print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
             temp1=key.split('-')
             temp2=temp1[1]
             temp3=temp2.strip()

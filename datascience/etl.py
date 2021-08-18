@@ -5,6 +5,13 @@ import math
 import sqlalchemy
 import pymysql
 import zipfile,re
+import os
+
+path = 'dataout'
+
+if os.path.isdir(path) == False:
+   print("Creating dataout folder")
+   os.makedirs("dataout")
 
 def col_to_index(col):
     return sum((ord(c) - 64) * 26**i for i, c in enumerate(reversed(col.upper()))) - 1
@@ -47,7 +54,7 @@ def Data(filename,tablename,sheet):
    data1=pd.read_excel(filename,sheet_name=sheet)
    latestmonth = data1.iloc[[-1]]['Date'].values[0]
    data2 = data1[data1["Date"] == latestmonth]
-   data3=data2.loc[:,['Date', 'FacilityType', 'BedSize', 'Region', 'Manufacturer', 'Ticker', 'Group', 'Therapy', 'Anatomy','SubAnatomy', 'ProductCategory', 'Quantity', 'AvgPrice', 'TotalSpend']]
+   data3=data2.loc[:,data2.columns.intersection(['Date', 'FacilityType', 'BedSize', 'Region', 'Manufacturer', 'Ticker', 'Group', 'Therapy', 'Anatomy','SubAnatomy', 'ProductCategory', 'Quantity', 'AvgPrice', 'TotalSpend'])]
    data3.to_sql(name=tablename,con=engine2,if_exists='append')
 
 def print_df():
@@ -111,14 +118,14 @@ def parse(filename,ticker,dfrowinx=0):
             Type=emp_type[i]
       csvdf.loc[dfrowinx]=[currentdate,ticker,Type,reg_arr[i],reg_arr[i+1],emp_arr[i],emp_arr[i+1],emp_arr[i+2],reg_arr[i+2],reg_arr[i+3],reg_arr[i+4]]
       csvdf.to_sql(name='outputdata',con=engine,index=False,if_exists='append')
-      csvdf.to_csv('abmd.csv')
+      csvdf.to_csv(path+'/'+filename.split('/')[1].split('.')[0]+'.csv')
       dfrowinx+=1
    print_df()
 
 
 
 #with zipfile.ZipFile("ETL Datasheet-20210628T180058Z-001.zip","r") as my_zip:
-with zipfile.ZipFile("ETL Datasheet1.zip","r") as my_zip:
+with zipfile.ZipFile("ETL Datasheett.zip","r") as my_zip:
    csvdf = pd.DataFrame(columns=['Date', 'Ticker', 'Type','Quarter','Year','Estimated_Total_Sold','Estimated_Sold_Max'\
                           ,'Estimated_Sold_Min','Forecast_wo_SA_Actual','Forecast_wo_Max','Forecast_wo_Min'])
    #t()

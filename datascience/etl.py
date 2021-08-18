@@ -22,7 +22,7 @@ def empirical(filename,sheet):
    Str="Unnamed: "+str(col_to_index("F")-1)
    index = data0.index
    indx=index[data0[Str] == "Max"].tolist()[0]
-   data=data0.iloc[indx-1:indx+2,4:6].values
+   data=data0.iloc[indx-1:indx+2,4:6].values 
    #print(data)
    actual=data[0][1]
    #Max

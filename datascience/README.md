@@ -1,18 +1,7 @@
 Tribe H datascience project
 
 # About
-This is a dynamic ETL application. In progress.
+This is a dynamic ETL application.
 
-# API Documentation
-## Extract
-### Methods
-#### Parse:
-The parse method takes filename as argument. parse("filename")
-
-
-## Transform
-## Load
-## Dynamize
-
-# GUI Documentation
+The architecture will have a python based process that would minimize the efforts of the continuous changes in an ETL process by making it configurable. Data is extracted from the dataset as per the requirments mentioned in the project business requirement document. Script extracts the data in minimum time possible.
 

@@ -1,2 +1,2 @@
 # Tribe_H
-Leap 4.0 project. More to come...
+Leap 4.0 project.

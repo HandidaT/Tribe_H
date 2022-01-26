@@ -31,8 +31,8 @@ def empirical(filename,sheet):
    Min=data[2][1]
    return actual,Max,Min
    
-engine = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306/AnalystData')
-engine2 = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306/Data')
+engine = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306/AnalystData')#,fast_executemany=True)
+engine2 = sqlalchemy.create_engine('mysql+pymysql://root:@localhost:3306/Data')#,fast_executemany=True)
    
 def regression(filename,sheet):
    data1=pd.read_excel(filename,sheet_name=sheet)
@@ -107,16 +107,17 @@ def parse(filename,ticker,dfrowinx=0):
       #er_count*2
    for i in range(er_count):
       if not emp_type:
-         print("########################################## type None ################################################################")
+         print("####################### type None #############)
          Type=None
       else:
          print(emp_type)
          if emp_type[i]!=reg_type[i]:
-            print("########################################## types not equal ################################################################")
+            print("################ types not equal #############")
          else:
-            print("########################################## types equal ################################################################")
+            print("############# types equal ##############")
             Type=emp_type[i]
-      csvdf.loc[dfrowinx]=[currentdate,ticker,Type,reg_arr[i],reg_arr[i+1],emp_arr[i],emp_arr[i+1],emp_arr[i+2],reg_arr[i+2],reg_arr[i+3],reg_arr[i+4]]
+
+csvdf.loc[dfrowinx]=[currentdate,ticker,Type,reg_arr[i],reg_arr[i+1],emp_arr[i],emp_arr[i+1],emp_arr[i+2],reg_arr[i+2],reg_arr[i+3],reg_arr[i+4]]
       csvdf.to_sql(name='outputdata',con=engine,index=False,if_exists='append')
       csvdf.to_csv(path+'/'+filename.split('/')[1].split('.')[0]+'.csv')
       dfrowinx+=1
